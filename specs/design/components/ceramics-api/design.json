@@ -39,25 +39,18 @@
       "resourceType": "thunder-app"
     },
     {
-      "candidates": [
+      "config": [
         {
-          "name": "stripe",
-          "package": "npm:stripe@^14",
-          "style": "sdk"
-        },
-        {
-          "name": "braintree",
-          "package": "npm:braintree@^3",
-          "style": "sdk"
-        },
-        {
-          "name": "paypal",
-          "style": "rest-api"
+          "description": "Stripe secret API key used to create and confirm PaymentIntents.",
+          "key": "STRIPE_API_KEY",
+          "secret": true
         }
       ],
-      "description": "Processes checkout card payments; no provider chosen yet — candidates below.",
+      "description": "Processes checkout card payments via the Stripe SDK; the API creates a PaymentIntent from the cart total and confirms it with the client-supplied payment method.",
       "kind": "external",
-      "name": "payment-provider"
+      "name": "payment-provider",
+      "package": "npm:stripe@^14",
+      "style": "sdk"
     },
     {
       "candidates": [
