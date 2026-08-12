@@ -53,25 +53,22 @@
       "style": "sdk"
     },
     {
-      "candidates": [
+      "config": [
         {
-          "name": "sendgrid",
-          "package": "npm:@sendgrid/mail@^8",
-          "style": "sdk"
+          "description": "SendGrid API key used to send transactional emails.",
+          "key": "SENDGRID_API_KEY",
+          "secret": true
         },
         {
-          "name": "postmark",
-          "style": "rest-api"
-        },
-        {
-          "name": "ses",
-          "package": "npm:@aws-sdk/client-ses@^3",
-          "style": "sdk"
+          "description": "Verified sender address order-confirmation emails are sent from.",
+          "key": "SENDGRID_FROM_EMAIL"
         }
       ],
-      "description": "Sends order-confirmation emails to Shoppers; no provider chosen yet — candidates below.",
+      "description": "Sends order-confirmation emails to Shoppers via the SendGrid SDK when an order is placed.",
       "kind": "external",
-      "name": "email-provider"
+      "name": "email-provider",
+      "package": "npm:@sendgrid/mail@^8",
+      "style": "sdk"
     }
   ],
   "description": "Single Ballerina service owning the product catalog, cart, checkout, and order lifecycle for the single-seller ceramics store. Exposes REST endpoints for browsing (public), cart/checkout (Shopper, signed in), and catalog/order management (Store Owner, signed in). Removes a piece from the catalog the moment it is purchased since every listing is one-of-a-kind. Does not send emails or process payments itself — it calls out to the email and payment providers. Does not serve any UI.",
