@@ -22,56 +22,94 @@
     12,
     13
   ],
+  "description": "Single Ballerina service owning the product catalog, cart, checkout, and order lifecycle for the single-seller ceramics store. Exposes REST endpoints for browsing (public), cart/checkout (Shopper, signed in), and catalog/order management (Store Owner, signed in). Removes a piece from the catalog the moment it is purchased since every listing is one-of-a-kind. Does not send emails or process payments itself — it calls out to the email and payment providers. Does not serve any UI.",
   "dependencies": [
     {
-      "description": "Stores the product catalog, shopping carts, and orders.",
       "kind": "platform-resource",
       "name": "ceramics-db",
-      "resourceType": "postgres"
+      "description": "Stores the product catalog, shopping carts, and orders.",
+      "resourceType": "postgres",
+      "wiring": {
+        "ref": "store-handmade-ce-6088d32e",
+        "envBindings": {
+          "adminPassword": "CERAMICS_DB_ADMINPASSWORD",
+          "adminURL": "CERAMICS_DB_ADMINURL",
+          "database": "CERAMICS_DB_DATABASE",
+          "host": "CERAMICS_DB_HOST",
+          "password": "CERAMICS_DB_PASSWORD",
+          "port": "CERAMICS_DB_PORT",
+          "url": "CERAMICS_DB_URL",
+          "username": "CERAMICS_DB_USERNAME"
+        }
+      }
     },
     {
-      "description": "Validates the bearer token the gateway forwards for Shopper checkout and Store Owner management calls.",
       "kind": "platform-resource",
       "name": "user-auth",
+      "description": "Validates the bearer token the gateway forwards for Shopper checkout and Store Owner management calls.",
+      "resourceType": "thunder-app",
       "parameters": {
         "scopes": "openid profile email"
       },
-      "resourceType": "thunder-app"
+      "wiring": {
+        "ref": "store-handmade-ce-81a87f04",
+        "envBindings": {
+          "client_id": "USER_AUTH_CLIENT_ID",
+          "issuer": "USER_AUTH_ISSUER",
+          "jwks_url": "USER_AUTH_JWKS_URL",
+          "scopes": "USER_AUTH_SCOPES"
+        }
+      }
     },
     {
-      "config": [
-        {
-          "description": "Stripe secret API key used to create and confirm PaymentIntents.",
-          "key": "STRIPE_API_KEY",
-          "secret": true
-        }
-      ],
-      "description": "Processes checkout card payments via the Stripe SDK; the API creates a PaymentIntent from the cart total and confirms it with the client-supplied payment method.",
       "kind": "external",
       "name": "payment-provider",
+      "description": "Processes checkout card payments via the Stripe SDK; the API creates a PaymentIntent from the cart total and confirms it with the client-supplied payment method.",
+      "style": "sdk",
       "package": "npm:stripe@^14",
-      "style": "sdk"
-    },
-    {
       "config": [
         {
-          "description": "SendGrid API key used to send transactional emails.",
-          "key": "SENDGRID_API_KEY",
-          "secret": true
-        },
-        {
-          "description": "Verified sender address order-confirmation emails are sent from.",
-          "key": "SENDGRID_FROM_EMAIL"
+          "key": "STRIPE_API_KEY",
+          "secret": true,
+          "description": "Stripe secret API key used to create and confirm PaymentIntents."
         }
       ],
-      "description": "Sends order-confirmation emails to Shoppers via the SendGrid SDK when an order is placed.",
+      "wiring": {
+        "ref": "store-handmade-ce-9458a9cc",
+        "envBindings": {
+          "STRIPE_API_KEY": "STRIPE_API_KEY"
+        }
+      }
+    },
+    {
       "kind": "external",
       "name": "email-provider",
+      "description": "Sends order-confirmation emails to Shoppers via the SendGrid SDK when an order is placed.",
+      "style": "sdk",
       "package": "npm:@sendgrid/mail@^8",
-      "style": "sdk"
+      "config": [
+        {
+          "key": "SENDGRID_API_KEY",
+          "secret": true,
+          "description": "SendGrid API key used to send transactional emails."
+        },
+        {
+          "key": "SENDGRID_FROM_EMAIL",
+          "description": "Verified sender address order-confirmation emails are sent from."
+        }
+      ],
+      "wiring": {
+        "ref": "store-handmade-ce-7cc77d82",
+        "envBindings": {
+          "SENDGRID_API_KEY": "SENDGRID_API_KEY",
+          "SENDGRID_FROM_EMAIL": "SENDGRID_FROM_EMAIL"
+        }
+      }
     }
   ],
-  "description": "Single Ballerina service owning the product catalog, cart, checkout, and order lifecycle for the single-seller ceramics store. Exposes REST endpoints for browsing (public), cart/checkout (Shopper, signed in), and catalog/order management (Store Owner, signed in). Removes a piece from the catalog the moment it is purchased since every listing is one-of-a-kind. Does not send emails or process payments itself — it calls out to the email and payment providers. Does not serve any UI.",
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
   "skillsPinned": [
     "openapi-conventions",
     "ballerina",
