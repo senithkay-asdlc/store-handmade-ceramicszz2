@@ -1,0 +1,123 @@
+{
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "A Shopper can browse the product catalog without signing in",
+      "stories": [1],
+      "criteria": [
+        { "id": "AC-001-a", "must": "The catalog page is reachable without an active sign-in session", "method": "e2e" },
+        { "id": "AC-001-b", "must": "The catalog lists only pieces currently available for sale", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "statement": "A Shopper can view a detailed product page showing photos, description, price, and availability",
+      "stories": [2],
+      "criteria": [
+        { "id": "AC-002-a", "must": "Opening a catalog item navigates to a product detail page", "method": "e2e" },
+        { "id": "AC-002-b", "must": "The product detail page shows a photo, description, price, and availability status", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "statement": "A Shopper can add a piece to a cart",
+      "stories": [3],
+      "criteria": [
+        { "id": "AC-003-a", "must": "Adding a product from its detail page places it in the cart", "method": "e2e" },
+        { "id": "AC-003-b", "must": "A sold-out or already-purchased piece cannot be added to the cart", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-004",
+      "statement": "A Shopper can review and adjust their cart before checking out",
+      "stories": [4],
+      "criteria": [
+        { "id": "AC-004-a", "must": "The cart page lists each added item with its price", "method": "e2e" },
+        { "id": "AC-004-b", "must": "Removing an item from the cart updates the displayed total", "method": "e2e" },
+        { "id": "AC-004-c", "must": "The cart shows a total that reflects the sum of item prices plus flat-rate shipping", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "statement": "A Shopper must sign in via SSO before completing checkout",
+      "stories": [5],
+      "criteria": [
+        { "id": "AC-005-a", "must": "Proceeding from the cart to checkout without an active session redirects to sign-in", "method": "e2e" },
+        { "id": "AC-005-b", "must": "After a successful sign-in, the Shopper returns to the checkout flow", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-006",
+      "statement": "A signed-in Shopper can enter shipping and payment details and place an order",
+      "stories": [6],
+      "criteria": [
+        { "id": "AC-006-a", "must": "Checkout requires a shipping address and payment details before submission", "method": "e2e" },
+        { "id": "AC-006-b", "must": "Submitting valid shipping and payment details creates an order", "method": "e2e" },
+        { "id": "AC-006-c", "must": "Submitting checkout with declined payment details does not create an order and shows an error", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-007",
+      "statement": "A Shopper receives an order confirmation after purchase",
+      "stories": [7],
+      "criteria": [
+        { "id": "AC-007-a", "must": "Placing an order shows an on-screen order confirmation", "method": "e2e" },
+        { "id": "AC-007-b", "must": "Placing an order triggers a confirmation email to the Shopper", "method": "manual" }
+      ]
+    },
+    {
+      "id": "REQ-008",
+      "statement": "A Shopper can view their past orders and each order's status",
+      "stories": [8],
+      "criteria": [
+        { "id": "AC-008-a", "must": "The order history page lists only the signed-in Shopper's own orders", "method": "e2e" },
+        { "id": "AC-008-b", "must": "Each listed order shows its current fulfillment status", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-009",
+      "statement": "The Store Owner must sign in via SSO to manage the store",
+      "stories": [9],
+      "criteria": [
+        { "id": "AC-009-a", "must": "The catalog and order management views are unreachable without an active Store Owner session", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-010",
+      "statement": "The Store Owner can add, edit, and remove product listings",
+      "stories": [10],
+      "criteria": [
+        { "id": "AC-010-a", "must": "The Store Owner can create a new product listing with name, description, and price", "method": "e2e" },
+        { "id": "AC-010-b", "must": "The Store Owner can edit an existing product listing's fields", "method": "e2e" },
+        { "id": "AC-010-c", "must": "The Store Owner can remove a product listing", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-011",
+      "statement": "A purchased piece is automatically removed from the public catalog",
+      "stories": [11],
+      "criteria": [
+        { "id": "AC-011-a", "must": "Immediately after an order is placed, the purchased piece no longer appears in the public catalog", "method": "e2e" },
+        { "id": "AC-011-b", "must": "A piece already purchased by another Shopper cannot be added to a different cart", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-012",
+      "statement": "The Store Owner can view incoming orders",
+      "stories": [12],
+      "criteria": [
+        { "id": "AC-012-a", "must": "The order management view lists all orders across all Shoppers", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-013",
+      "statement": "The Store Owner can update an order's fulfillment status through new, shipped, and delivered",
+      "stories": [13],
+      "criteria": [
+        { "id": "AC-013-a", "must": "The Store Owner can change an order's status from new to shipped", "method": "e2e" },
+        { "id": "AC-013-b", "must": "The Store Owner can change an order's status from shipped to delivered", "method": "e2e" },
+        { "id": "AC-013-c", "must": "The Shopper's own order history reflects the updated status", "method": "e2e" }
+      ]
+    }
+  ]
+}
